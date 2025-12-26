@@ -22,16 +22,6 @@ local images = {
 }
 local crypt = crypt or getrenv().crypt
 
-for i, v in next, images do
-    local path = settings.folder_name .. "/assets/" .. i .. ".ln"
-
-    if not isfile(path) then
-        local data = game:HttpGet(v)
-        writefile(path, crypt.base64encode(data))
-    end
-
-    images[i] = crypt.base64decode(readfile(path))
-end
 
 
 local services = setmetatable({}, {
