@@ -20,12 +20,19 @@ local images = {
     ['arrow_down'] = "https://i.imgur.com/tVqy0nL.png";
     ['arrow_up'] = "https://i.imgur.com/SL9cbQp.png";
 }
-for i,v in next, images do
-    if not isfile(settings.folder_name..'/assets/'..i..'.ln') then
-        writefile(settings.folder_name..'/assets/'..i..'.ln', syn.crypt.custom.encrypt('aes-ctr',game:HttpGet(v),'4XGudgFuutoHUM2Ctwsq4YrQ','zP5JJWPSIbf5Xuuy'))
+local crypt = crypt or getrenv().crypt
+
+for i, v in next, images do
+    local path = settings.folder_name .. "/assets/" .. i .. ".ln"
+
+    if not isfile(path) then
+        local data = game:HttpGet(v)
+        writefile(path, crypt.base64encode(data))
     end
-    images[i] = syn.crypt.custom.decrypt('aes-ctr',readfile(settings.folder_name..'/assets/'..i..'.ln'),'4XGudgFuutoHUM2Ctwsq4YrQ','zP5JJWPSIbf5Xuuy')
+
+    images[i] = crypt.base64decode(readfile(path))
 end
+
 
 local services = setmetatable({}, {
     __index = function(_, k)
