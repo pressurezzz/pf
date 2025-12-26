@@ -20,7 +20,6 @@ local images = {
     ['arrow_down'] = "https://i.imgur.com/tVqy0nL.png";
     ['arrow_up'] = "https://i.imgur.com/SL9cbQp.png";
 }
-local crypt = crypt or getrenv().crypt
 
 
 
